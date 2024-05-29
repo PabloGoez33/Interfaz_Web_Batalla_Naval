@@ -48,29 +48,32 @@ Tener en cuenta: primeramente debe descargar el repositorio, para hacerlo ten en
 ### Ejecutar la interfaz web
 1. Abra la terminal en su computadora.
 2. En la terminal utilice el comando **cd** para entrar al escritorio; "cd Escritorio" (depende del nombre que tenga su escritorio o que ruta tiene para llegar a este).
-3. Utilice el mismo comando para entrar a la aplicación "cd batalla-master".
-4. Utilice el comando anterior nuevamente "cd batalla-master".
-5. Utilice el comando "cd prueba_import".
-6. Despues utilice el comando "python app.py".
-7. Una vez ejecutado el comando anterior busca, dirigete donde dice "Running on" y en el url preciona las teclas **CTRL + Click**, esto abrira directamente la pagina.
-8. Disfruta del juego.
+3. Utilice el mismo comando para entrar a la aplicación "cd Interfaz_Web_Batalla_Naval-main".
+4. Utilice el mismo comando para entrar a la aplicación "cd batalla-master".
+5. Utilice el comando anterior nuevamente "cd batalla-master".
+6. Utilice el comando "cd prueba_import".
+7. Despues utilice el comando "python app.py".
+8. Una vez ejecutado el comando anterior busca, dirigete donde dice "Running on" y en el url preciona las teclas **CTRL + Click**, esto abrira directamente la pagina.
+9. Disfruta del juego.
 
 
 ### Ejecutar pruebas unitarias
 1. Abra la terminal en su computadora.
 2. En la terminal utilice el comando **cd** para entrar al escritorio; "cd Escritorio" (depende del nombre que tenga su escritorio o que ruta tiene para llegar a este).
-3. Utilice el mismo comando para entrar a la aplicación "cd batalla-master".
-4. Utilice el comando anterior nuevamente "cd batalla-master".
-5. Utilice el comando "cd prueba_import".
-6. Despues utilice el comando "python Test.py".
-7. Una vez ejecutado el comando anterior podras observar el resultado de las pruebas unitarias.
+3. Utilice el mismo comando para entrar a la aplicación "cd Interfaz_Web_Batalla_Naval-main".
+4. Utilice el mismo comando para entrar a la aplicación "cd batalla-master".
+5. Utilice el comando anterior nuevamente "cd batalla-master".
+6. Utilice el comando "cd prueba_import".
+7. Despues utilice el comando "python Test.py".
+8. Una vez ejecutado el comando anterior podras observar el resultado de las pruebas unitarias.
 
 
 ### Ejecutar la interfaz grafica 
 1. Abra la terminal en su computadora.
 2. En la terminal utilice el comando **cd** para entrar al escritorio; "cd Escritorio" (depende del nombre que tenga su escritorio o que ruta tiene para llegar a este).
-3. Utilice el mismo comando para entrar a la aplicación "cd batalla-master".
-4. Utilice el comando anterior nuevamente "cd batalla-master".
-5. Utilice el comando "cd prueba_import".
-6. Despues utilice el comando "python Main.py".
-7. Disfruta del juego.
+3. Utilice el mismo comando para entrar a la aplicación "cd Interfaz_Web_Batalla_Naval-main".
+4. Utilice el mismo comando para entrar a la aplicación "cd batalla-master".
+5. Utilice el comando anterior nuevamente "cd batalla-master".
+6. Utilice el comando "cd prueba_import".
+7. Despues utilice el comando "python Main.py".
+8. Disfruta del juego.
