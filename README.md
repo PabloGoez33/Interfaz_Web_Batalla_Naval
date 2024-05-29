@@ -41,39 +41,30 @@ Tener en cuenta: primeramente debe descargar el repositorio, para hacerlo ten en
 4. En la consola de git bash escribe el comando "git clone" y pega el link del repositorio, recuerde que para pegar el link debes presionar click derecho y luego presiona en pegar, despues le das entrer y el repositorio se comenzara a descargar en el escritorio. 
 
 
-### Base de datos
-- En esta aplicacion se encuentra directamente conectada la base de datos por ende solo debes correr la aplicacion que te mostraremos como mas adelante. 
+### Configuracion Base de datos
+1. Debes ingresar a la pagina Neon. [Neon.Tech](https://neon.tech/)
+2. Te registrar/logea, una vez registrado debes crear un proyecto, el titulo del proyecto a tu preferencia y el nombre de la base de datos puede porle: "BattleShip" y le das es crear proyecto.
+3. Una vez  creado el proyecto y la base de datos te dirijes a la opcion **Dashboard**.
+4. Desplegas el menu donde dice **Connection string**, alli seleccionas la opcion de **Parameters only**.
+5. Copias todo lo que se encuentra en el campo de texto y te dirijes donde tienes el repositorio abierto.
+6. En la carpeta del proyecto encontraras una carpeta llamada **controller**, Alli encontraras un archivo llamado **SecretConfigSample.py**.
+7. En este archivo debes pegar los parametros que copias en el Neon de tu base de datos.
+8. Por Ultimo debes cambiar el nombre del archivo SecretConfigSample.py por **SecretConfig.py**.
 
 
 ### Ejecutar la interfaz web
 1. Abra la terminal en su computadora.
 2. En la terminal utilice el comando **cd** para entrar al escritorio; "cd Escritorio" (depende del nombre que tenga su escritorio o que ruta tiene para llegar a este).
 3. Utilice el mismo comando para entrar a la aplicación "cd Interfaz_Web_Batalla_Naval-main".
-4. Utilice el mismo comando para entrar a la aplicación "cd batalla-master".
-5. Utilice el comando anterior nuevamente "cd batalla-master".
-6. Utilice el comando "cd prueba_import".
-7. Despues utilice el comando "python app.py".
-8. Una vez ejecutado el comando anterior busca, dirigete donde dice "Running on" y en el url preciona las teclas **CTRL + Click**, esto abrira directamente la pagina.
-9. Disfruta del juego.
+4. Despues utilice el comando "python app.py".
+5. Una vez ejecutado el comando anterior busca, dirigete donde dice "Running on" y en el url preciona las teclas **CTRL + Click**, esto abrira directamente la pagina.
+6. Disfruta del juego.
 
 
 ### Ejecutar pruebas unitarias
 1. Abra la terminal en su computadora.
 2. En la terminal utilice el comando **cd** para entrar al escritorio; "cd Escritorio" (depende del nombre que tenga su escritorio o que ruta tiene para llegar a este).
 3. Utilice el mismo comando para entrar a la aplicación "cd Interfaz_Web_Batalla_Naval-main".
-4. Utilice el mismo comando para entrar a la aplicación "cd batalla-master".
-5. Utilice el comando anterior nuevamente "cd batalla-master".
-6. Utilice el comando "cd prueba_import".
-7. Despues utilice el comando "python Test.py".
-8. Una vez ejecutado el comando anterior podras observar el resultado de las pruebas unitarias.
-
-
-### Ejecutar la interfaz grafica 
-1. Abra la terminal en su computadora.
-2. En la terminal utilice el comando **cd** para entrar al escritorio; "cd Escritorio" (depende del nombre que tenga su escritorio o que ruta tiene para llegar a este).
-3. Utilice el mismo comando para entrar a la aplicación "cd Interfaz_Web_Batalla_Naval-main".
-4. Utilice el mismo comando para entrar a la aplicación "cd batalla-master".
-5. Utilice el comando anterior nuevamente "cd batalla-master".
-6. Utilice el comando "cd prueba_import".
-7. Despues utilice el comando "python Main.py".
-8. Disfruta del juego.
+4. Utilice el mismo comando "cd" para ingresar a la carpeta test, "cd test"
+4. Despues utilice el comando "python Test.py".
+5. Una vez ejecutado el comando anterior podras observar el resultado de las pruebas unitarias.

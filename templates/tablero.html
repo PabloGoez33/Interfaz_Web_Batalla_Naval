@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tablero</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            display: flex;
+            gap: 50px;
+        }
+
+        .board {
+            display: grid;
+            grid-template-columns: repeat(9, 50px);
+            grid-template-rows: repeat(9, 50px);
+            gap: 5px;
+            background-color: white;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .board .header, .board .number, .board .cell {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .board .header {
+            font-weight: bold;
+            background-color: #e0e0e0;
+        }
+
+        .board .number {
+            font-weight: bold;
+            background-color: #e0e0e0;
+        }
+
+        .board .cell button {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background-color: #007BFF;
+            color: transparent; /* Oculta el texto inicialmente */
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .board .cell button.selected {
+            background-color: #28a745; /* Cambia el color de fondo de los botones seleccionados */
+            color: white; /* Muestra el texto "X" en los botones seleccionados */
+        }
+
+        .board .cell button.hit {
+            background-color: #dc3545; /* Color de acierto */
+            color: white;
+        }
+
+        .board .cell button.miss {
+            background-color: #ffc107; /* Color de fallo */
+        }
+
+        /*.board .cell button.ship {
+            background-color: #e100ff; /* Color de los barcos del jugador */
+        /*}*/
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="board" id="boardLeft">
+            <div class="header"></div>
+            {% for col in "ABCDEFGH" %}
+                <div class="header">{{ col }}</div>
+            {% endfor %}
+            {% for row in range(1, 9) %}
+                <div class="number">{{ row }}</div>
+                {% for col in "ABCDEFGH" %}
+                    <div class="cell"><button></button></div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+        <div class="board" id="boardRight">
+            <div class="header"></div>
+            {% for col in "ABCDEFGH" %}
+                <div class="header">{{ col }}</div>
+            {% endfor %}
+            {% for row in range(1, 9) %}
+                <div class="number">{{ row }}</div>
+                {% for col in "ABCDEFGH" %}
+                    <div class="cell"><button></button></div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        function showAlert(titulo, mensaje) {
+            if(mensaje === 'PERDISTE') {
+                Swal.fire({
+                    title: titulo,
+                    text: mensaje,
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            } else if (mensaje === 'GANASTE'){
+                Swal.fire({
+                    title: titulo,
+                    text: mensaje,
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
+            } else {
+                Swal.fire({
+                    title: titulo,
+                    text: mensaje,
+                    icon: 'info',
+                    confirmButtonText: 'OK'
+                });
+            }
+            
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const boardLeft = document.getElementById('boardLeft');
+            const buttonsLeft = boardLeft.querySelectorAll('button');
+
+            const boardRight = document.getElementById('boardRight');
+            const buttonsRight = boardRight.querySelectorAll('button');
+
+            let selectedCount = 0;
+            let shipsPlacedByPlayer = 0;
+            let shipsPlacedByAI = 0;
+            let playerShipsSunk = 0;
+            let aiShipsSunk = 0;
+
+            function checkGameOver() {
+                if (playerShipsSunk === 10) {
+                    endGame();
+                    titulo = 'PERDISTE';
+                    mensaje = '¡La IA ha hundido todos tus barcos!';
+                    showAlert(titulo, mensaje);
+                    notificar_server('IA');
+                } else if (aiShipsSunk === 10) {
+                    endGame();
+                    titulo = 'GANASTE';
+                    mensaje = '¡Has hundido todos los barcos de la IA!';
+                    showAlert(titulo, mensaje);
+                    notificar_server('usuario');
+                }
+            }
+
+            function notificar_server(winner) {
+                fetch('/tablero', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ winner })
+                })
+                .then(response => response.json())
+                .then(data => console.log(data))
+                .catch(error => console.error('Error:', error));
+            }
+
+            function endGame() {
+                // Deshabilita todos los botones en ambos tableros
+                const allButtons = document.querySelectorAll('button');
+                allButtons.forEach(button => button.disabled = true);
+            }
+
+            function iaShoot() {
+                let randomButton;
+                do {
+                    randomButton = buttonsLeft[Math.floor(Math.random() * buttonsLeft.length)];
+                } while (randomButton.classList.contains('hit') || randomButton.classList.contains('miss'));
+                
+                randomButton.disabled = true; // Deshabilita el botón para evitar múltiples clics
+
+                if (randomButton.classList.contains('ship')) {
+                    randomButton.classList.remove('selected');
+                    randomButton.classList.add('hit');
+                    randomButton.classList.textContent = 'X';
+                    playerShipsSunk++;
+                    
+                    const colIndex = randomButton.parentElement.cellIndex;
+                    const rowIndex = randomButton.parentElement.parentElement.rowIndex;
+                    const correspondingButton = boardLeft.rows[rowIndex].cells[colIndex].querySelector('button');
+                    correspondingButton.classList.add('hit');
+                    
+                } else {
+                    randomButton.classList.add('miss');
+                }
+            }
+
+            // Lógica para la colocación de barcos del jugador y empezar el juego
+            buttonsLeft.forEach(button => {
+                button.addEventListener('click', () => {
+                    if (!button.classList.contains('selected') && selectedCount < 10) {
+                        button.classList.add('selected');
+                        button.classList.add('ship');
+                        button.textContent = 'X';
+                        selectedCount++;
+                        shipsPlacedByPlayer++
+                        if (selectedCount === 10) {
+                            titulo = '!A JUGAR¡';
+                            mensaje = 'Barcos colocados. Comienza el juego contra la IA.';
+                            showAlert(titulo, mensaje );
+                            // Colocación de barcos de la IA
+                            while (shipsPlacedByAI < 10) {
+                                const randomButton = buttonsRight[Math.floor(Math.random() * buttonsRight.length)];
+                                if (!randomButton.classList.contains('ship')) {
+                                    randomButton.classList.add('ship');
+                                    shipsPlacedByAI++;
+                                }
+                            }
+                            checkGameOver();
+                            // Lógica de juego
+                            buttonsRight.forEach(button => {
+                                button.addEventListener('click', () => {
+                                    if (button.classList.contains('ship')) {
+                                        button.classList.add('hit');
+                                        button.textContent = 'X';
+                                        aiShipsSunk++;
+                                    } else {
+                                        button.classList.add('miss');
+                                    }
+                                    button.disabled = true; // Deshabilita el botón para evitar múltiples clics
+                                    checkGameOver();
+
+                                    // Disparo de la IA al tablero del usuario
+                                    setTimeout(iaShoot, 100); // Retraso de 1 segundo antes de que la IA dispare al usuario
+                                });
+                            });
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
